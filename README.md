@@ -4,6 +4,9 @@ An implementation of the Cleware USB Stoplight (USB-Ampel) in .NET
 # USB-Ampel Protocols
 
 ## USB-TrafficLights S
+
+Thanks to https://github.com/holgero/ClewareUSB for providing the java version and initial documention to get the light working.
+
 ### Identifiers
 These may be the same for all Cleware Ampel devices but without the physical products I can not test this.
 
