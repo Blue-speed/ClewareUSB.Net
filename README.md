@@ -14,11 +14,32 @@ VID 0x0D50
 DID 0x0008
 
 ### Commands
-The USB command structure consists of 4 bytes. The first two bytes are always 0, the third byte is the LED to turn on and the last is the state, 1 for on 0 for off.
+The USB command structure consists of 4 bytes. The first two bytes are always 0, the third byte is the LED address and the last is the pulse duration.
 
-*Red:* 0x010  
-*Yellow:* 0x011  
-*Green:* 0x012
+#### LED Address
+* *Red:* 0x010  
+* *Yellow:* 0x011  
+* *Green:* 0x012
+
+#### Pulse duration
+* *Off* 0x000  
+* *Solid* 0x001
+* *0.5 Seconds* 0x001
+* *1 Second* 0x0011
+* *1.5 Seconds* 0x012
+* *2 Seconds* 0x013
+* *2.5 Seconds* 0x014
+* *3 Seconds* 0x015
+* *3.5 Seconds* 0x016
+* *4 Seconds* 0x017
+* *4.5 Seconds* 0x018
+* *5 Seconds* 0x019
+* *5.5 Seconds* 0x01A
+* *6 Seconds* 0x01B
+* *6.5 Seconds* 0x01C
+* *7 Seconds* 0x01D
+* *7.5 Seconds* 0x01E
+* *8 Seconds* 0x01F
 
 The final command will look something like  
 ```csharp 
