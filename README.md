@@ -1,6 +1,20 @@
 # ClewareUSB.Net
 An implementation of the Cleware USB Stoplight (USB-Ampel) in .NET
 
+# Requirements
+
+This package requires a .Net HID Libary found here:  
+https://github.com/mikeobrien/HidLibrary
+
+# Using
+using the Ampel factory to get the first instance or all usb instances. Both methods will return an ISwitchable Object.  Using the interface set or clear the device state.
+
+```csharp
+ISwitchable device = AmpelFactory.GetAllDevices();
+device.SetState(ISwitchable.Status.Red,ISwitchable.Pulse.Off);
+device.Clear();
+```
+
 # USB-Ampel Protocols
 
 ## USB-TrafficLights S
@@ -43,5 +57,5 @@ The USB command structure consists of 4 bytes. The first two bytes are always 0,
 
 The final command will look something like  
 ```csharp 
-Device.Write(new byte[]{0,0,0x010,1}); 
+device.Write(new byte[]{0,0,0x010,1}); 
 ```
