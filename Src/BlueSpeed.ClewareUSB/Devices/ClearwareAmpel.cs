@@ -47,7 +47,6 @@ namespace BlueSpeed.ClewareUSB.Devices
 
 	public override void SetState(Status status, Pulse pulse)
 	{
-	  Clear();
 	  RunCommandOnAllDevices(GenerateCommand(status, pulse));
 	}
 

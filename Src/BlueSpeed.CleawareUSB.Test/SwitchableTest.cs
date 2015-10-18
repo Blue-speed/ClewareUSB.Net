@@ -45,21 +45,12 @@ namespace BlueSpeed.CleawareUSB.Test
 	public void SetStateWillCallHidWithFourBytes()
 	{
 	  _mockDevices.WatchWrite();
+	  foreach (ISwitchable.Status status in Enum.GetValues(typeof(ISwitchable.Status)))
+	  {
+		_trafficLight.SetState(status, ISwitchable.Pulse.Solid);
 
-	  _trafficLight.SetState(ISwitchable.Status.Green, ISwitchable.Pulse.Solid);
-
-	  _mockDevices.VerifyWrite(LightHasState(LedAddress.Green,StateBytes.Solid), Times.Exactly(1));
-	}
-
-	[TestMethod]
-	public void SetStateWillClearBeforeSettingLight()
-	{
-	  _mockDevices.WatchWrite();
-
-	  _trafficLight.SetState(ISwitchable.Status.Red, ISwitchable.Pulse.Solid);
-
-	  _mockDevices.VerifyWrite(AllLightsOff, Times.Exactly(3));
-	  _mockDevices.VerifyWrite(LightHasState(LedAddress.Red, StateBytes.Solid), Times.Exactly(1));
+		_mockDevices.VerifyWrite(LightHasState(LedAddress[status], StateBytes[ISwitchable.Pulse.Solid]), Times.Exactly(1));
+	  }
 	}
 	
 	[TestMethod]
@@ -74,27 +65,27 @@ namespace BlueSpeed.CleawareUSB.Test
 
 	#region Helpers
 	private readonly Expression<Func<byte[],bool>> AllLightsOff = 
-	  (bytes) => bytes[3] == 0 && bytes[2] >= LedAddress.Red && bytes[2] <= LedAddress.Green;
+	  (bytes) => bytes[3] == 0 && bytes[2] >= LedAddress[ISwitchable.Status.Red] && bytes[2] <= LedAddress[ISwitchable.Status.Green];
 
 	private Expression<Func<byte[], bool>> LightHasState(byte ledAddress,byte state)
 	{
 	  return (bytes) => bytes[3] == state && bytes[2] == ledAddress;
 	}
 
-	#region struct
-	private struct LedAddress
+	#region static
+	private static Dictionary<ISwitchable.Status, byte> LedAddress = new Dictionary<ISwitchable.Status, byte>
 	{
-	  public static readonly byte Red = 0x010;
-	  public static readonly byte Yellow = 0x011;
-	  public static readonly byte Green = 0x012;
-    }
-	private struct StateBytes
+	  {ISwitchable.Status.Red,0x010},
+	  {ISwitchable.Status.Yellow,0x011},
+	  {ISwitchable.Status.Green,0x012},
+	};
+	private static Dictionary<ISwitchable.Pulse, byte> StateBytes = new Dictionary<ISwitchable.Pulse, byte>
 	{
-	  public static readonly byte Off = 0x000;
-	  public static readonly byte Solid = 0x001;
-	  public static readonly byte HalfSecond = 0x010;
-	  public static readonly byte OneSecond = 0x011;
-	}
+	  {ISwitchable.Pulse.Off,0x000},
+	  {ISwitchable.Pulse.Solid,0x001},
+	  {ISwitchable.Pulse.HalfSecond,0x010},
+	  {ISwitchable.Pulse.OneSecond,0x011},
+	};
 	#endregion
 	#endregion
 

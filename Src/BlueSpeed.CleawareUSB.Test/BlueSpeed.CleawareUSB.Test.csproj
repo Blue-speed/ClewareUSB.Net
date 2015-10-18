@@ -59,7 +59,6 @@
     <Compile Include="Mocks\HidMock.cs" />
     <Compile Include="SwitchableTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlueSpeed.ClewareUSB\BlueSpeed.ClewareUSB.csproj">
